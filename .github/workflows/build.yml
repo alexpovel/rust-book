@@ -1,0 +1,24 @@
+name: Build and test
+
+on:
+  push:
+
+jobs:
+  build-and-test:
+    name: Build and test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up 'just' command runner
+        uses: extractions/setup-just@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run builds
+        run: just build-all
+
+      - name: Run tests
+        run: just test-all
